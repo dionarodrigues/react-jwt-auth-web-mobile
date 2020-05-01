@@ -4,5 +4,13 @@
   "port": "5432",
   "username": "postgres",
   "password": "docker",
-  "database": "appointment_scheduling"
+  "database": "appointment_scheduling",
+  "migrations": [
+    "./src/database/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
 }
+
+
