@@ -11,11 +11,11 @@ interface RequestDTO {
 
 class CreateAppointmentService {
   public async execute({ provider, date }: RequestDTO): Promise<Appointment> {
-    const appointmentsRespository = getCustomRepository(AppointmentsRepository);
+    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
     const apointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = await appointmentsRespository.findByDate(
+    const findAppointmentInSameDate = await appointmentsRepository.findByDate(
       apointmentDate,
     );
 
@@ -23,12 +23,12 @@ class CreateAppointmentService {
       throw Error('This appointment is alread booked');
     }
 
-    const appointment = appointmentsRespository.create({
+    const appointment = appointmentsRepository.create({
       provider,
       date: apointmentDate,
     });
 
-    await appointmentsRespository.save(appointment);
+    await appointmentsRepository.save(appointment);
 
     return appointment;
   }
