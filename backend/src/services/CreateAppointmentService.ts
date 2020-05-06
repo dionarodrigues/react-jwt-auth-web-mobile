@@ -5,12 +5,15 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 // DTO (Data Transfer Object)
 interface RequestDTO {
-  provider: string;
+  provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
-  public async execute({ provider, date }: RequestDTO): Promise<Appointment> {
+  public async execute({
+    provider_id,
+    date,
+  }: RequestDTO): Promise<Appointment> {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
     const apointmentDate = startOfHour(date);
@@ -24,7 +27,7 @@ class CreateAppointmentService {
     }
 
     const appointment = appointmentsRepository.create({
-      provider,
+      provider_id,
       date: apointmentDate,
     });
 
