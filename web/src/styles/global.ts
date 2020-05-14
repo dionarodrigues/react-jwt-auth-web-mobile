@@ -41,6 +41,7 @@ export default createGlobalStyle`
     --border-color-light: var(--gray);
 
     --text-color: var(--black);
+    --text-color-light: var(--gray);
   }
 
   * {
