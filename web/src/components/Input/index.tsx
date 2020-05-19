@@ -50,6 +50,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
         ref={inputRef}
         defaultValue={defaultValue}
       />
+      {error}
     </S.Container>
   );
 };
