@@ -10,6 +10,7 @@ export default createGlobalStyle`
     --black: #0e0d11;
 
     --primary-color: #0070ba;
+    --error-color: #c53030;
 
     --width-container: 1400px;
 
