@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyled from './styles/global';
 import Routes from './routes';
 
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './hooks/AuthContext';
 
 const App: React.FC = () => (
   <>
