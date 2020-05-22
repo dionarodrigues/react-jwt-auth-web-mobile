@@ -4,8 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyled from './styles/global';
 import Routes from './routes';
 
-import ToastContainer from './components/ToastContainer';
-
 import AppProvider from './hooks';
 
 const App: React.FC = () => (
@@ -16,7 +14,6 @@ const App: React.FC = () => (
         <Routes />
       </BrowserRouter>
     </AppProvider>
-    <ToastContainer />
   </>
 );
 
