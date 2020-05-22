@@ -4,8 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyled from './styles/global';
 import Routes from './routes';
 
-import { AuthProvider } from './hooks/AuthContext';
 import ToastContainer from './components/ToastContainer';
+
+import { AuthProvider } from './hooks/auth';
+// import { ToastProvider } from './hooks/toast';
 
 const App: React.FC = () => (
   <>
