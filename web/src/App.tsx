@@ -7,15 +7,17 @@ import Routes from './routes';
 import ToastContainer from './components/ToastContainer';
 
 import { AuthProvider } from './hooks/auth';
-// import { ToastProvider } from './hooks/toast';
+import { ToastProvider } from './hooks/toast';
 
 const App: React.FC = () => (
   <>
     <GlobalStyled />
     <AuthProvider>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </ToastProvider>
     </AuthProvider>
     <ToastContainer />
   </>
