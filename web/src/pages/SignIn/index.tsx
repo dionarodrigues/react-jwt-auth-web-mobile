@@ -50,6 +50,7 @@ const SignIn: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValitationErrors(err);
           formRef.current?.setErrors(errors);
+          return;
         }
 
         addToast({

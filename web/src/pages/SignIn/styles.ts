@@ -1,5 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 // import { Link } from 'react-router-dom';
+
+const AnimationForm = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -12,6 +23,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   max-width: 80%;
   width: 400px;
+  animation: ${AnimationForm} 1s;
 
   form {
     display: flex;
