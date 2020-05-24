@@ -3,18 +3,30 @@ import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
 import getValitationErrors from '../../utils/getValitationErrors';
+import api from '../../services/api';
+
+import { useToast } from '../../hooks/toast';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import * as S from './styles';
 
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const { addToast } = useToast();
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async (data: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
       // console.log(formRef);
@@ -30,6 +42,14 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      await api.post('/users', data);
+      addToast({
+        type: 'success',
+        title: 'Successful registration!',
+        description: 'You can now login. 😍',
+      });
+      history.push('/');
     } catch (err) {
       console.log(err);
 
