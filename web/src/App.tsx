@@ -7,14 +7,12 @@ import Routes from './routes';
 import AppProvider from './hooks';
 
 const App: React.FC = () => (
-  <>
-    <GlobalStyled />
+  <BrowserRouter>
     <AppProvider>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <Routes />
     </AppProvider>
-  </>
+    <GlobalStyled />
+  </BrowserRouter>
 );
 
 export default App;
