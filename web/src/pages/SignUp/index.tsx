@@ -26,38 +26,48 @@ const SignUp: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
-      // console.log(formRef);
+  const handleSubmit = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        // console.log(formRef);
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
-        email: Yup.string()
-          .required('Email is required')
-          .email('Enter a valid email'),
-        password: Yup.string().min(6, '6 characters minimum'),
-      });
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Name is required'),
+          email: Yup.string()
+            .required('Email is required')
+            .email('Enter a valid email'),
+          password: Yup.string().min(6, '6 characters minimum'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      await api.post('/users', data);
-      addToast({
-        type: 'success',
-        title: 'Successful registration!',
-        description: 'You can now login. 😍',
-      });
-      history.push('/');
-    } catch (err) {
-      console.log(err);
+        await api.post('/users', data);
+        addToast({
+          type: 'success',
+          title: 'Successful registration!',
+          description: 'You can now login. 😍',
+        });
+        history.push('/');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValitationErrors(err);
+          formRef.current?.setErrors(errors);
+          return;
+        }
 
-      const errors = getValitationErrors(err);
-
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        addToast({
+          type: 'error',
+          title: 'Registration Error',
+          description:
+            'An error occurred while trying to sign up. Check the entrances and try again.',
+        });
+      }
+    },
+    [addToast, history],
+  );
 
   return (
     <S.Container>
