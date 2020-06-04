@@ -18,6 +18,8 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import getValitationErrors from '../../utils/getValitationErrors';
 
+import { useAuth } from '../../hooks/auth';
+
 import * as S from './styles';
 
 interface SignInFormProps {
@@ -30,45 +32,44 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  // const handleSignIn = useCallback((data: object) => {
-  //   console.log(data);
-  // }, []);
+  const { signIn } = useAuth();
 
-  const handleSignIn = useCallback(async (data: SignInFormProps) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignIn = useCallback(
+    async (data: SignInFormProps) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('Email is required')
-          .email('Enter a valid email'),
-        password: Yup.string().required('Password is required'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('Email is required')
+            .email('Enter a valid email'),
+          password: Yup.string().required('Password is required'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // await signIn({
-      //   email: data.email,
-      //   password: data.password,
-      // });
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValitationErrors(err);
+          // console.log(errors);
+          formRef.current?.setErrors(errors);
+          return;
+        }
 
-      // history.push('/dashboard');
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValitationErrors(err);
-        // console.log(errors);
-        formRef.current?.setErrors(errors);
-        return;
+        Alert.alert(
+          'Authentication Error',
+          'An error occurred while trying to sign in. Check the entrances and try again.',
+        );
       }
-
-      Alert.alert(
-        'Authentication Error',
-        'An error occurred while trying to sign in. Check the entrances and try again.',
-      );
-    }
-  }, []);
+    },
+    [signIn],
+  );
 
   return (
     <>
